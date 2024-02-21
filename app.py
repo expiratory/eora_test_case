@@ -13,7 +13,7 @@ app = FastAPI()
 context_list = get_context_list()
 
 
-@app.post('/get_answer', response_model=Answer)
+@app.post('/get_answer/', response_model=Answer)
 async def get_answer(question: Question):
     # answer = ask_gigachat(question, context_list)
     answer = ask_chat_gpt(question.question, context_list)
