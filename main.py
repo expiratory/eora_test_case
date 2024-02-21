@@ -7,8 +7,7 @@ import handlers
 from context_list import get_context_list
 
 
-# logging.basicConfig(level=logging.DEBUG, filename='logs.txt', format=' %(asctime)s - %(levelname)s - %(message)s')  #prod
-logging.basicConfig(level=logging.INFO)  # dev
+logging.basicConfig(level=logging.DEBUG, filename='bot_logs.conf', format=' %(asctime)s - %(levelname)s - %(message)s')
 
 load_dotenv(find_dotenv())
 TG_BOT_TOKEN = getenv("TG_BOT_TOKEN")

@@ -1,16 +1,27 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from giga_chat import ask_gigachat
 from chat_gpt import ask_chat_gpt
 from context_list import get_context_list
-import logging
 from models import Question, Answer
+import logging
 
-
-# logging.basicConfig(level=logging.DEBUG, filename='logs.txt', format=' %(asctime)s - %(levelname)s - %(message)s')  #prod
-logging.basicConfig(level=logging.INFO)  # dev
 
 app = FastAPI()
 context_list = get_context_list()
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    filename='fastapi_logs.conf',
+    format=' %(asctime)s - %(levelname)s - %(message)s'
+)
+
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logging.info(f"{request.method} {request.url}")
+    response = await call_next(request)
+    logging.info(f"Response status code: {response.status_code}")
+    return response
 
 
 @app.post('/get_answer/', response_model=Answer)
