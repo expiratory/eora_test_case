@@ -8,7 +8,7 @@ with requests.Session() as se:
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.939 YaBrowser/24.1.1.939 (beta) Yowser/2.5 Safari/537.36",
     }
 
-with open('headers.txt', 'a') as f:
+with open('headers.txt', 'a', encoding='utf-8') as f:
     for link in link_list:
         res = se.get(link).text
         soup = BeautifulSoup(res, 'lxml')
