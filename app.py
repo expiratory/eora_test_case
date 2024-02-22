@@ -18,9 +18,8 @@ logging.basicConfig(
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
-    logging.info(f"{request.method} {request.url}")
     response = await call_next(request)
-    logging.info(f"Response status code: {response.status_code}")
+    logging.info(f"{request.method} {request.url} {response.status_code}")
     return response
 
 
