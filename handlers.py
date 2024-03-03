@@ -2,6 +2,7 @@ from aiogram import types, F, Router
 from aiogram.filters.command import Command
 from giga_chat import ask_gigachat
 from chat_gpt import ask_chat_gpt
+from context_list import get_context_list
 
 
 router = Router()
@@ -14,8 +15,11 @@ async def start(message: types.Message):
 
 @router.message(F.text)
 async def get_answer(message: types.Message):
-    from main import context_list
+    from main import args
 
-    # answer = ask_gigachat(message.text, context_list)
-    answer = ask_chat_gpt(message.text, context_list)
+    context_list = get_context_list()
+    if args.ai == 'gigachat':
+        answer = ask_gigachat(message.text, context_list)
+    else:
+        answer = ask_chat_gpt(message.text, context_list)
     await message.answer(answer)

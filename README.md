@@ -31,8 +31,8 @@
 Ссылка на кейс: [ссылка](https://eora.ru/cases/skinclub-algoritm-dlya-ocenki-veroyatnostej)
 ```
 
-Для переключения между ними нужно раскомментить одну из двух строк в файлах handlers.py (19 и 20 
-строки) и в файле app.py (18 и 19 строки).
+Для переключения между ними используется аргумент командной строки --ai с двумя выборами - chatgpt 
+и gigachat (по умолчанию chatgpt)
 
 ### Развертывание для каждого из вариантов:
 
@@ -41,8 +41,8 @@
 Для использования GigaChat потребуется установка корневого сертификата МинЦифры:
 
 ``` curl -k "https://gu-st.ru/content/Other/doc/russian_trusted_root_ca.cer" -w "\n" >> $(python -m certifi) ```
-* для telegram бота - ``` python main.py```
-* для FastAPI - ``` uvicorn app:app --reload ```, далее можно перейти по 
+* для telegram бота - ``` python main.py --ai {chatgpt,gigachat} ```
+* для FastAPI - ``` python app.py --ai {chatgpt,gigachat} ```, далее можно перейти по 
 http://127.0.0.1:8000/docs и в Swagger'е попробовать использовать чат через единственную ручку 
 POST /get_answer/
 

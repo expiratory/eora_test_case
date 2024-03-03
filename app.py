@@ -4,6 +4,13 @@ from chat_gpt import ask_chat_gpt
 from context_list import get_context_list
 from models import Question, Answer
 import logging
+import uvicorn
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--ai', choices=('chatgpt', 'gigachat'), default='chatgpt', help="Выбор языковой "
+                    "модели, ChatGPT или GigaChat, по умолчанию - ChatGPT")
+args = parser.parse_args()
 
 
 app = FastAPI()
@@ -25,6 +32,12 @@ async def log_requests(request: Request, call_next):
 
 @app.post('/get_answer/', response_model=Answer)
 async def get_answer(question: Question):
-    # answer = ask_gigachat(question, context_list)
-    answer = ask_chat_gpt(question.question, context_list)
+    if args.ai == 'gigachat':
+        answer = ask_gigachat(question, context_list)
+    else:
+        answer = ask_chat_gpt(question.question, context_list)
     return Answer(answer=answer)
+
+
+if __name__ == '__main__':
+    uvicorn.run(app)
